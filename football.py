@@ -122,6 +122,8 @@ class Game():
             print("")
             print(f'The affected team is {team.name}. Here is the updated score\n{round(updated_score, 2)}')
             print("")
+            print(f"This is a debugger spot! {team.name}'s other score: {team.fantasy_points()}")
+            print("")
             if team == self.team1:
                 if updated_score < team2_score:
                     print(f'What an upset!! {self.team2.name} takes the week!')
