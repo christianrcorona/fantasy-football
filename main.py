@@ -18,5 +18,11 @@ team1 = football.Team("Swampdogs", [qb1, team1_wr1, team1_wr2, team1_rb1, team1_
 team2 = football.Team("Golden Stars", [qb2, team2_wr1, team2_wr2, team2_rb1, team2_te1, team2_defense, team2_kicker])
 
 
+#Foundational level of implementing data and converting to fantasy points
+#Next step will be either API or CSV usage
+#Once we get a full year season of weekly stats, then we can add in most fantasy football features and simulations
+#Another big step is figuring out user interation and giving the user commands
+
+
 game = football.Game(team1, team2)
 game.simulate()

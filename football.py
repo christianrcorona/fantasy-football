@@ -76,6 +76,7 @@ class Game():
 
         new_winner = self.random_occurence(team1_score, team2_score)
         if new_winner:
+            # if new_winner returns a value else if it returns none
             winner = new_winner
             print("Updated Winner:", winner)
         else:
@@ -101,6 +102,7 @@ class Game():
             modify = random.choice(possible_stats)
             original_stat = player.stats.get(modify, 0)
             if original_stat == 0 or original_stat < 0:
+                #filtering no data stats
                 print(f"{player.name}'s {modify} = 0.\nWe can't perform our magic!")
                 print("")
                 return None
@@ -116,21 +118,21 @@ class Game():
 
             print(f"Uh no! {player.name}'s {modify} stat has been affected.\nIt went from: {original_stat} to now {round(player.stats[modify], 2)}.")
             
-            team.roster.remove(player)
             updated_score = team.fantasy_points()
-            team.roster.append(player)
+            #tests showed that originally was redundant
             print("")
             print(f'The affected team is {team.name}. Here is the updated score\n{round(updated_score, 2)}')
             print("")
-            print(f"This is a debugger spot! {team.name}'s other score: {team.fantasy_points()}")
-            print("")
             if team == self.team1:
                 if updated_score < team2_score:
+                    #team 1 losing points
                     print(f'What an upset!! {self.team2.name} takes the week!')
                     return self.team2.name
             else:
                 if updated_score > team1_score:
+                    #team 2 having more points than team 1
                     print(f'Incredible comeback! {team.name} is now taking the week!')
                     return team.name
             player.stats[modify] = original_stat
+            #Brings stats back so it can always replay over and over again
         return None
