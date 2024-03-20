@@ -61,8 +61,8 @@ class Game():
         print("Week 1 of Fantasy Football:")
         print("")
         print("")
-        print(f'{self.team1.name}: {team1_score}')
-        print(f'{self.team2.name}: {team2_score}')
+        print(f'{self.team1.name}: {team1_score} fantasy points')
+        print(f'{self.team2.name}: {team2_score} fantasy points')
 
         if team1_score > team2_score:
             winner = self.team1.name
@@ -116,12 +116,12 @@ class Game():
                 player.stats[modify] = original_stat / 30
 
 
-            print(f"Uh no! {player.name}'s {modify} stat has been affected.\nIt went from: {original_stat} to now {round(player.stats[modify], 2)}.")
+            print(f"Uh no! {player.name}'s {modify} stat has been affected.\nIt went from: {original_stat} to now {round(player.stats[modify], 2)} .")
             
             updated_score = team.fantasy_points()
             #tests showed that originally was redundant
             print("")
-            print(f'The affected team is {team.name}. Here is the updated score\n{round(updated_score, 2)}')
+            print(f'The affected team is {team.name}. Here is the updated score\n{round(updated_score, 2)} fantasy points')
             print("")
             if team == self.team1:
                 if updated_score < team2_score:
