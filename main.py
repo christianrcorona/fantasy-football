@@ -22,7 +22,7 @@ team2 = football.Team("Golden Stars", [qb2, team2_wr1, team2_wr2, team2_rb1, tea
 #Next step will be either API or CSV usage
 #Once we get a full year season of weekly stats, then we can add in most fantasy football features and simulations
 #Another big step is figuring out user interation and giving the user commands
-
+#1
 
 game = football.Game(team1, team2)
 game.simulate()
