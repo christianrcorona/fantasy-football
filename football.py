@@ -1,4 +1,7 @@
 import random
+import pandas as pd
+
+data = pd.read_csv('stats 1.csv')
 class Player():
     def __init__(self, name, position, team, stats):
         self.name = name
