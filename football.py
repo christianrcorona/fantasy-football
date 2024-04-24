@@ -1,15 +1,39 @@
 import random
 import pandas as pd
 
-data = pd.read_csv('stats 1.csv')
+def players_csv(file):
+    data = pd.read_csv(file)
+    players = data.apply(Player, axis=1).tolist()
+    return players
 
 class Player():
-    def __init__(self, name, position, team, stats):
-        self.name = name
-        self.position = position
-        self.team = team
-        self.stats = stats
-
+    def __init__(self, row):
+        self.name = row["Player Name"]
+        self.position = row["Position"]
+        self.stats = {
+        "passing_yards": float(row["Passing Yards"]) if not pd.isna(row["Passing Yards"]) else None,
+        "passing_touchdowns": float(row["Passing Touchdowns"]) if not pd.isna(row["Passing Touchdowns"]) else None,
+        "Rushing Yards": float(row["Rushing Yards"]) if not pd.isna(row["Rushing Yards"]) else None,
+        "Rushing Touchdowns": float(row["Rushing Touchdowns"]) if not pd.isna(row["Rushing Touchdowns"]) else None,
+        "Interceptions": float(row["Interceptions"]) if not pd.isna(row["Interceptions"]) else None,
+        "RB Total Rushing Yards": float(row["RB Total Rushing Yards"]) if not pd.isna(row["RB Total Rushing Yards"]) else None,
+        "RB Total Rushing Carries": float(row["RB Total Rushing Carries"]) if not pd.isna(row["RB Total Rushing Carries"]) else None,
+        "RB Total Rushing Touchdowns": float(row["RB Total Rushing Touchdowns"]) if not pd.isna(row["RB Total Rushing Touchdowns"]) else None,
+        "RB Receiving Yards": float(row["RB Receiving Yards"]) if not pd.isna(row["RB Receiving Yards"]) else None,
+        "WR Total Receptions": float(row["WR Total Receptions"]) if not pd.isna(row["WR Total Receptions"]) else None,
+        "WR Total Receiving Yards": float(row["WR Total Receiving Yards"]) if not pd.isna(row["WR Total Receiving Yards"]) else None,
+        "WR Total Receiving Touchdowns": float(row["WR Total Receiving Touchdowns"]) if not pd.isna(row["WR Total Receiving Touchdowns"]) else None,
+        "WR Rushing Yards": float(row["WR Rushing Yards"]) if not pd.isna(row["WR Rushing Yards"]) else None,
+        "TE Total Receptions": float(row["TE Total Receptions"]) if not pd.isna(row["TE Total Receptions"]) else None,
+        "TE Total Yards": float(row["TE Total Yards"]) if not pd.isna(row["TE Total Yards"]) else None,
+        "TE Receiving Touchdowns": float(row["TE Receiving Touchdowns"]) if not pd.isna(row["TE Receiving Touchdowns"]) else None,
+        "Total Yards Against": float(row["Total Yards Against"]) if not pd.isna(row["Total Yards Against"]) else None,
+        "Total Interceptions": float(row["Total Interceptions"]) if not pd.isna(row["Total Interceptions"]) else None,
+        "Total Points Allowed": float(row["Total Points Allowed"]) if not pd.isna(row["Total Points Allowed"]) else None,
+        "Total FG Made": float(row["Total FG Made"]) if not pd.isna(row["Total FG Made"]) else None,
+        "Total PAT Made": float(row["Total PAT Made"]) if not pd.isna(row["Total PAT Made"]) else None
+    }
+        
 class Team():
     def __init__(self, name, roster):
         self.name = name
