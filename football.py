@@ -10,29 +10,29 @@ class Player():
     def __init__(self, row):
         self.name = row["Player Name"]
         self.position = row["Position"]
-        self.stats = {
-        "passing_yards": float(row["Passing Yards"]) if not pd.isna(row["Passing Yards"]) else None,
-        "passing_touchdowns": float(row["Passing Touchdowns"]) if not pd.isna(row["Passing Touchdowns"]) else None,
-        "Rushing Yards": float(row["Rushing Yards"]) if not pd.isna(row["Rushing Yards"]) else None,
-        "Rushing Touchdowns": float(row["Rushing Touchdowns"]) if not pd.isna(row["Rushing Touchdowns"]) else None,
-        "Interceptions": float(row["Interceptions"]) if not pd.isna(row["Interceptions"]) else None,
-        "RB Total Rushing Yards": float(row["RB Total Rushing Yards"]) if not pd.isna(row["RB Total Rushing Yards"]) else None,
-        "RB Total Rushing Carries": float(row["RB Total Rushing Carries"]) if not pd.isna(row["RB Total Rushing Carries"]) else None,
-        "RB Total Rushing Touchdowns": float(row["RB Total Rushing Touchdowns"]) if not pd.isna(row["RB Total Rushing Touchdowns"]) else None,
-        "RB Receiving Yards": float(row["RB Receiving Yards"]) if not pd.isna(row["RB Receiving Yards"]) else None,
-        "WR Total Receptions": float(row["WR Total Receptions"]) if not pd.isna(row["WR Total Receptions"]) else None,
-        "WR Total Receiving Yards": float(row["WR Total Receiving Yards"]) if not pd.isna(row["WR Total Receiving Yards"]) else None,
-        "WR Total Receiving Touchdowns": float(row["WR Total Receiving Touchdowns"]) if not pd.isna(row["WR Total Receiving Touchdowns"]) else None,
-        "WR Rushing Yards": float(row["WR Rushing Yards"]) if not pd.isna(row["WR Rushing Yards"]) else None,
-        "TE Total Receptions": float(row["TE Total Receptions"]) if not pd.isna(row["TE Total Receptions"]) else None,
-        "TE Total Yards": float(row["TE Total Yards"]) if not pd.isna(row["TE Total Yards"]) else None,
-        "TE Receiving Touchdowns": float(row["TE Receiving Touchdowns"]) if not pd.isna(row["TE Receiving Touchdowns"]) else None,
-        "Total Yards Against": float(row["Total Yards Against"]) if not pd.isna(row["Total Yards Against"]) else None,
-        "Total Interceptions": float(row["Total Interceptions"]) if not pd.isna(row["Total Interceptions"]) else None,
-        "Total Points Allowed": float(row["Total Points Allowed"]) if not pd.isna(row["Total Points Allowed"]) else None,
-        "Total FG Made": float(row["Total FG Made"]) if not pd.isna(row["Total FG Made"]) else None,
-        "Total PAT Made": float(row["Total PAT Made"]) if not pd.isna(row["Total PAT Made"]) else None
-    }
+        self.stats = {key: value for key, value in {
+            "Passing Yards": float(row["Passing Yards"]) if not pd.isna(row["Passing Yards"]) else None,
+            "Passing Touchdowns": float(row["Passing Touchdowns"]) if not pd.isna(row["Passing Touchdowns"]) else None,
+            "Rushing Yards": float(row["Rushing Yards"]) if not pd.isna(row["Rushing Yards"]) else None,
+            "Rushing Touchdowns": float(row["Rushing Touchdowns"]) if not pd.isna(row["Rushing Touchdowns"]) else None,
+            "Interceptions": float(row["Interceptions"]) if not pd.isna(row["Interceptions"]) else None,
+            "RB Total Rushing Yards": float(row["RB Total Rushing Yards"]) if not pd.isna(row["RB Total Rushing Yards"]) else None,
+            "RB Total Rushing Carries": float(row["RB Total Rushing Carries"]) if not pd.isna(row["RB Total Rushing Carries"]) else None,
+            "RB Total Rushing Touchdowns": float(row["RB Total Rushing Touchdowns"]) if not pd.isna(row["RB Total Rushing Touchdowns"]) else None,
+            "RB Receiving Yards": float(row["RB Receiving Yards"]) if not pd.isna(row["RB Receiving Yards"]) else None,
+            "WR Total Receptions": float(row["WR Total Receptions"]) if not pd.isna(row["WR Total Receptions"]) else None,
+            "WR Total Receiving Yards": float(row["WR Total Receiving Yards"]) if not pd.isna(row["WR Total Receiving Yards"]) else None,
+            "WR Total Receiving Touchdowns": float(row["WR Total Receiving Touchdowns"]) if not pd.isna(row["WR Total Receiving Touchdowns"]) else None,
+            "WR Rushing Yards": float(row["WR Rushing Yards"]) if not pd.isna(row["WR Rushing Yards"]) else None,
+            "TE Total Receptions": float(row["TE Total Receptions"]) if not pd.isna(row["TE Total Receptions"]) else None,
+            "TE Total Yards": float(row["TE Total Yards"]) if not pd.isna(row["TE Total Yards"]) else None,
+            "TE Receiving Touchdowns": float(row["TE Receiving Touchdowns"]) if not pd.isna(row["TE Receiving Touchdowns"]) else None,
+            "Total Yards Against": float(row["Total Yards Against"]) if not pd.isna(row["Total Yards Against"]) else None,
+            "Total Interceptions": float(row["Total Interceptions"]) if not pd.isna(row["Total Interceptions"]) else None,
+            "Total Points Allowed": float(row["Total Points Allowed"]) if not pd.isna(row["Total Points Allowed"]) else None,
+            "Total FG Made": float(row["Total FG Made"]) if not pd.isna(row["Total FG Made"]) else None,
+            "Total PAT Made": float(row["Total PAT Made"]) if not pd.isna(row["Total PAT Made"]) else None
+    }.items() if value is not None}
         
 class Team():
     def __init__(self, name, roster):
@@ -44,32 +44,32 @@ class Team():
         for player in self.roster:
             if player.position == "QB":
 #Based on average scoring systems, multiple resources, in the future, the 0 value in the get method will be useful.
-                total_points += player.stats.get('passing_yards', 0) / 25 
-                total_points += player.stats.get('passing_tds', 0) * 6  
-                total_points += player.stats.get('rushing_yards', 0) / 10 
-                total_points += player.stats.get('rushing_tds', 0) * 6
-                total_points -= player.stats.get('interceptions', 0) * 2
+                total_points += player.stats.get('Passing Yards', 0) / 25 
+                total_points += player.stats.get('Passing Touchdowns', 0) * 6  
+                total_points += player.stats.get('Rushing Yards', 0) / 10 
+                total_points += player.stats.get('Rushing Touchdowns', 0) * 6
+                total_points -= player.stats.get('Interceptions', 0) * 2
             elif player.position == "WR":
-                total_points += player.stats.get('receiving_yards', 0) / 10
-                total_points += player.stats.get('receiving_tds', 0) * 6
-                total_points += player.stats.get('rushing_yards', 0) / 15
-                total_points += player.stats.get('receptions', 0) * 0.5
+                total_points += player.stats.get('WR Total Receiving Yards', 0) / 10
+                total_points += player.stats.get('WR Total Receiving Touchdowns', 0) * 6
+                total_points += player.stats.get('WR Rushing Yards', 0) / 15
+                total_points += player.stats.get('WR Total Receptions', 0) * 0.5
             elif player.position == "RB":
-                total_points += player.stats.get('rushing_yards', 0) / 10 
-                total_points += player.stats.get('rushing_tds', 0) * 6  
-                total_points += player.stats.get('total_carries', 0) * 0.3
-                total_points += player.stats.get('receiving_yds', 0) / 10
+                total_points += player.stats.get('RB Total Rushing Yards', 0) / 10 
+                total_points += player.stats.get('RB Total Rushing Touchdowns', 0) * 6  
+                total_points += player.stats.get('RB Total Rushing Carries', 0) * 0.3
+                total_points += player.stats.get('RB Receiving Yards', 0) / 10
             elif player.position == "TE":
-                total_points += player.stats.get('receptions', 0) * 0.5
-                total_points += player.stats.get('receiving_yds', 0) / 10
-                total_points += player.stats.get('receiving_tds', 0) * 6
+                total_points += player.stats.get('TE Total Receptions', 0) * 0.5
+                total_points += player.stats.get('TE Total Yards', 0) / 10
+                total_points += player.stats.get('TE Receiving Touchdowns', 0) * 6
             elif player.position == "Defense":
-                total_points -= player.stats.get('yards_against', 0) / 35
-                total_points += player.stats.get('interceptions', 0) * 2
-                total_points -= player.stats.get('points_allowed', 0) / 20
+                total_points -= player.stats.get('Total Yards Against', 0) / 35
+                total_points += player.stats.get('Total Interceptions', 0) * 2
+                total_points -= player.stats.get('Total Points Allowed', 0) / 20
             elif player.position == "Kicker":
-                total_points += player.stats.get('FG_made', 0) * 3
-                total_points += player.stats.get('PAT_made', 0)
+                total_points += player.stats.get('Total FG Made', 0) * 3
+                total_points += player.stats.get('Total PAT Made', 0)
             else:
                 pass
         return total_points

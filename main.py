@@ -14,15 +14,30 @@ import football
 #team2_te1 = football.Player("Sam LaPorta", "TE", "Detroit Lions", {"receptions": 7, "receiving_yds": 84, "receiving_tds": 1})
 #team2_defense = football.Player("Ravens Defensive line", "Defense", "Baltimore", {"yards_against": 220, "interceptions": 1, "points_allowed": 14})
 #team2_kicker = football.Player("Brandon Aubrey", "Kicker", "Dallas Cowboys", {"FG_made": 1, "PAT_made": 4})
-#team1 = football.Team("Swampdogs", [qb1, team1_wr1, team1_wr2, team1_rb1, team1_te1, team1_defense, team1_kicker])
-#team2 = football.Team("Golden Stars", [qb2, team2_wr1, team2_wr2, team2_rb1, team2_te1, team2_defense, team2_kicker])
-
 players = football.players_csv("stats 1.csv")
-player1 = players[0]
+qb1 = players[0]
+qb2 = players[1]
+team1_rb1 = players[4]
+team2_rb1 = players[5]
+team1_wr1 = players[8]
+team1_wr2 = players[9]
+team2_wr1 = players[10]
+team2_wr2 = players[11]
+team1_te1 = players[16]
+team2_te1 = players[17]
+team1_defense = players[20]
+team2_defense = players[21]
+team1_kicker = players[24]
+team2_kicker = players[25]
 
-print(player1.name)
-print(player1.position)
-print(player1.stats)
+
+#player1 = players[25]
+#print(player1.name)
+#print(player1.position)
+#print(player1.stats)
+
+team1 = football.Team("Swampdogs", [qb1, team1_wr1, team1_wr2, team1_rb1, team1_te1, team1_defense, team1_kicker])
+team2 = football.Team("Golden Stars", [qb2, team2_wr1, team2_wr2, team2_rb1, team2_te1, team2_defense, team2_kicker])
 
 #Foundational level of implementing data and converting to fantasy points
 #Next step will be either API or CSV usage
