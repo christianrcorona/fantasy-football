@@ -1,9 +1,11 @@
 import random
 import pandas as pd
 
-def players_csv(file):
-    data = pd.read_csv(file)
-    players = data.apply(Player, axis=1).tolist()
+def players_csv(files):
+    players = []
+    for file in files:
+        data = pd.read_csv(file)
+        players.extend(data.apply(Player, axis=1).tolist())
     return players
 
 class Player():
@@ -63,7 +65,7 @@ class Team():
                 total_points += player.stats.get('TE Total Receptions', 0) * 0.5
                 total_points += player.stats.get('TE Total Yards', 0) / 10
                 total_points += player.stats.get('TE Receiving Touchdowns', 0) * 6
-            elif player.position == "Defense":
+            elif player.position == "D/ST":
                 total_points -= player.stats.get('Total Yards Against', 0) / 35
                 total_points += player.stats.get('Total Interceptions', 0) * 2
                 total_points -= player.stats.get('Total Points Allowed', 0) / 20
@@ -117,13 +119,20 @@ class Game():
             team = random.choice(teams)
 
             player = random.choice(team.roster)
+            print(player.stats)
             
             if player.position == "QB":
-                possible_stats = ["passing_yards", "passing_tds", "rushing_yards", "interceptions"]
-            elif player.position in ["RB", "WR", "TE"]:
-                possible_stats = ["receptions", "receiving_yards", "receiving_tds", "rushing_yards", "total_carries"]
-            elif player.position in ["Defense", "Kicker"]:
-                possible_stats = ["yards_against", "interceptions", "points_allowed", "FG_made", "PAT_made"]
+                possible_stats = ['Passing Yards','Passing Touchdowns','Rushing Yards','Rushing Touchdowns','Interceptions']
+            elif player.position == "WR":
+                possible_stats = ['WR Total Receiving Yards','WR Total Receiving Touchdowns','WR Rushing Yards','WR Total Receptions']
+            elif player.position == "RB":
+                possible_stats = ['RB Total Rushing Yards', 'RB Total Rushing Touchdowns', 'RB Total Rushing Carries', 'RB Receiving Yards']
+            elif player.position == "TE":
+                possible_stats = ['TE Total Receptions', 'TE Total Yards', 'TE Receiving Touchdowns']
+            elif player.position == "D/ST":
+                possible_stats = ['Total Yards Against', 'Total Interceptions', 'Total Points Allowed']
+            elif player.position == "Kicker":
+                possible_stats = ['Total FG Made', 'Total PAT Made']
             else:
                 print("New Option")
             

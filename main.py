@@ -14,7 +14,8 @@ import football
 #team2_te1 = football.Player("Sam LaPorta", "TE", "Detroit Lions", {"receptions": 7, "receiving_yds": 84, "receiving_tds": 1})
 #team2_defense = football.Player("Ravens Defensive line", "Defense", "Baltimore", {"yards_against": 220, "interceptions": 1, "points_allowed": 14})
 #team2_kicker = football.Player("Brandon Aubrey", "Kicker", "Dallas Cowboys", {"FG_made": 1, "PAT_made": 4})
-players = football.players_csv("stats 1.csv")
+week_files = ["stats 1.csv", "Stats 2.csv", "stats 3.csv", "stats 4.csv", "stats 5.csv", "stats 6.csv"]
+players = football.players_csv(week_files)
 qb1 = players[0]
 qb2 = players[1]
 team1_rb1 = players[4]
@@ -31,6 +32,7 @@ team1_kicker = players[24]
 team2_kicker = players[25]
 
 
+
 #player1 = players[25]
 #print(player1.name)
 #print(player1.position)
@@ -45,5 +47,5 @@ team2 = football.Team("Golden Stars", [qb2, team2_wr1, team2_wr2, team2_rb1, tea
 #Another big step is figuring out user interation and giving the user commands
 #1
 
-#game = football.Game(team1, team2)
-#game.simulate()
+game = football.Game(team1, team2)
+game.simulate()
