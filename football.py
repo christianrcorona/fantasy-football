@@ -1,13 +1,10 @@
 import random
 import pandas as pd
 
-def players_csv(files):
-    players = []
-    for file in files:
-        data = pd.read_csv(file)
-        players.extend(data.apply(Player, axis=1).tolist())
+def players_csv(file):
+    data = pd.read_csv(file)
+    players = data.apply(Player, axis=1).tolist()
     return players
-
 class Player():
     def __init__(self, row):
         self.name = row["Player Name"]
@@ -88,7 +85,7 @@ class Game():
         team2_score = self.team2.fantasy_points()
         print("")
         print("")
-        print("Week 1 of Fantasy Football:")
+        print("Week {week_number} of Fantasy Football:")
         print("")
         print("")
         print(f'{self.team1.name}: {team1_score} fantasy points')
@@ -119,7 +116,6 @@ class Game():
             team = random.choice(teams)
 
             player = random.choice(team.roster)
-            print(player.stats)
             
             if player.position == "QB":
                 possible_stats = ['Passing Yards','Passing Touchdowns','Rushing Yards','Rushing Touchdowns','Interceptions']
@@ -148,9 +144,9 @@ class Game():
             operator = random.choice(operators)
 
             if operator == "*":
-                player.stats[modify] = original_stat * 2
+                player.stats[modify] = original_stat * 20
             else:
-                player.stats[modify] = original_stat / 30
+                player.stats[modify] = original_stat / 100
 
 
             print(f"Uh no! {player.name}'s {modify} stat has been affected.\nIt went from: {original_stat} to now {round(player.stats[modify], 2)} .")
