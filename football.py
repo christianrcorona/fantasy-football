@@ -85,7 +85,7 @@ class Game():
         team2_score = self.team2.fantasy_points()
         print("")
         print("")
-        print("Week {week_number} of Fantasy Football:")
+        print(f"Week {week_number} of Fantasy Football:")
         print("")
         print("")
         print(f'{self.team1.name}: {team1_score} fantasy points')

@@ -43,7 +43,7 @@ num_teams = 4
 num_players = 28
 
 # Shuffle the list of players randomly
-players = football.players_csv(week_files[0])  # Assuming all files have the same players
+players = football.players_csv(week_files[0])
 shuffle(players)
 
 # Create empty Team objects
@@ -107,4 +107,4 @@ for week_number in range(1, 7):
   team2 = teams[team2_index]
   game = football.Game(team1, team2)
   game.simulate()
-
+ 
