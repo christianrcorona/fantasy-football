@@ -20,23 +20,17 @@ from random import shuffle
 week_files = ["stats 1.csv", "Stats 2.csv", "stats 3.csv", "stats 4.csv", "stats 5.csv", "stats 6.csv"]
 #players = football.players_csv(week_files)
 
-dfs = {str(i + 1): pd.DataFrame() for i in range(len(week_files))}
-for i, file in enumerate(week_files):
+dfs = {}
+for index in range(len(week_files)):
+  dfs[str(index + 1)] = pd.DataFrame()
+for index, file in enumerate(week_files):
     players = football.players_csv(file)
-    dfs[str(i + 1)] = pd.DataFrame([player.__dict__ for player in players])
-for key, df in dfs.items():
-    print(f"Stats for dataframe {key}")
-    print(df['stats'])
-    print("\n")
-
-#player print
-for df_key, df in dfs.items():
-  qb = df.iloc[0]
-  print(f"Stats for Week {df_key} - Quarterback")
-  print(f"Name: {qb['name']}")
-  print(f"Position: {qb['position']}")
-  print(f"Stats: {qb.stats}")
-
+    player_dicts = []
+    for player in players:
+        player_dict = player.__dict__
+        player_dicts.append(player_dict)
+    df = pd.DataFrame(player_dicts)
+    dfs[str(index + 1)] = df
 
 team_structure = {"QB": 1, "RB": 1, "WR": 2, "TE": 1, "D/ST": 1, "Kicker": 1}
 num_teams = 4
@@ -46,17 +40,20 @@ num_players = 28
 players = football.players_csv(week_files[0])
 shuffle(players)
 
-# Create empty Team objects
-teams = [football.Team(f"Team {i+1}", []) for i in range(num_teams)]
+teams = []
+for i in range(num_teams):
+  team_name = f"Team {i+1}"
+  team = football.Team(team_name, [])
+  teams.append(team)
 
 # Draft loop with position tracking
 drafted_players = set()  # Track drafted players to avoid duplicates
 for team in teams:
-    for position, num_players_needed in team_structure.items():
+    for position, num_players_needed in team_structure.items():  #position equals to first part of team_structure, num_players_needed is the value inside it
         while num_players_needed > 0:
-            found_player = False
-            for player_index in range(len(players)):
-                player = players[player_index]
+            found_player = False #keep looking for players to draft
+            for player_index in range(len(players)): #player_index 0-27, 28 players
+                player = players[player_index] #finding the exact player
                 if player.position == position and player not in drafted_players:
                     team.roster.append(player)
                     drafted_players.add(player)  # Mark player as drafted
@@ -69,12 +66,22 @@ for team in teams:
                 break
 
 # Print team rosters
-for team in teams:
-    print(f"\nTeam: {team.name}")
+print("")
+print("")
+user_wants_data = input("Would you like to see all players and their positions for each team? Yes or No: ").lower()
+
+if user_wants_data in ['yes', 'y', 'ye', 'yess']:
+  for team in teams:
+    print(f"\nTeam: {team.name} ------")
+    print("")
     for player in team.roster:
-        print(f"  Name: {player.name}")
-        print(f"  Position: {player.position}")
-        print(f"  Stats: {player.stats}")
+      print("")
+      print(f"  Name: {player.name}")
+      print(f"  Position: {player.position}")
+      print("")
+  print("")
+  print("\nAll team players printed!")
+  print("")
 
 #qb1 = players[0]
 #qb2 = players[1]
@@ -102,9 +109,15 @@ for team in teams:
 #team2 = football.Team("Golden Stars", [qb2, team2_wr1, team2_wr2, team2_rb1, team2_te1, team2_defense, team2_kicker])
 
 for week_number in range(1, 7):
-  team1_index, team2_index = random.sample(range(num_teams), 2)
-  team1 = teams[team1_index]
-  team2 = teams[team2_index]
-  game = football.Game(team1, team2)
-  game.simulate()
- 
+    week_data = dfs[str(week_number)]
+    for team in teams:
+        for player in team.roster:
+            player_data = week_data[week_data['name'] == player.name]
+            if not player_data.empty:
+                player.stats.update(player_data.iloc[0].to_dict())
+    team1_index, team2_index = random.sample(range(num_teams), 2)
+    team1 = teams[team1_index]
+    team2 = teams[team2_index]
+    game = football.Game(team1, team2)
+    print(f"Week {week_number} of Fantasy Football:")
+    game.simulate()

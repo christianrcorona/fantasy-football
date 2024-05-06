@@ -1,5 +1,6 @@
 import random
 import pandas as pd
+import copy
 
 def players_csv(file):
     data = pd.read_csv(file)
@@ -85,9 +86,6 @@ class Game():
         team2_score = self.team2.fantasy_points()
         print("")
         print("")
-        print(f"Week {week_number} of Fantasy Football:")
-        print("")
-        print("")
         print(f'{self.team1.name}: {team1_score} fantasy points')
         print(f'{self.team2.name}: {team2_score} fantasy points')
 
@@ -106,16 +104,18 @@ class Game():
             # if new_winner returns a value else if it returns none
             winner = new_winner
             print("Updated Winner:", winner)
+            print("")
         else:
             print(f'Looks like it remains the same! {winner} stays on top!')
+            print("")
     def random_occurence(self, team1_score, team2_score):
         response = input("Would you like to see a random occurrence? Yes or No: ").lower()
         print("")
         if response in ['yes', 'y', 'ye', 'yess']:
             teams = [self.team1, self.team2]
             team = random.choice(teams)
-
             player = random.choice(team.roster)
+            original_stats = copy.deepcopy(player.stats)
             
             if player.position == "QB":
                 possible_stats = ['Passing Yards','Passing Touchdowns','Rushing Yards','Rushing Touchdowns','Interceptions']
@@ -161,11 +161,16 @@ class Game():
                     #team 1 losing points
                     print(f'What an upset!! {self.team2.name} takes the week!')
                     return self.team2.name
+                elif updated_score > team2_score:
+                    return self.team1.name
             else:
                 if updated_score > team1_score:
                     #team 2 having more points than team 1
                     print(f'Incredible comeback! {team.name} is now taking the week!')
-                    return team.name
-            player.stats[modify] = original_stat
+                    return self.team2.name
+                elif updated_score < team1_score:
+                    return self.team1.name
+            player.stats = original_stats
             #Brings stats back so it can always replay over and over again
         return None
+
